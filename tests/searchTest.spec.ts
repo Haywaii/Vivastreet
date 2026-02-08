@@ -46,7 +46,7 @@ test.describe('Aviva Search Tests', () => {
 
   });  
 
-    /** ACCESSIBILITY TEST **/
+  /** ACCESSIBILITY TEST **/
   test('Checka11ySearchPage', (async ({ page}, testInfo) => { 
     await searchPage.performanceSearchHomePageDefault();
     const accessibilityScanResults = await new AxeBuilder({page})
