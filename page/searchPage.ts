@@ -40,9 +40,9 @@ export class SearchPage {
         return await searchResultsList.count();;
     }
 
-    async validateSearchResults() {
+    async validateSearchResults(resultNumnberToReach: number) {
         const searchResultNumber = await this.calculateSearchResults();
-        expect(searchResultNumber).toBeGreaterThan(1);
+        expect(searchResultNumber).toBeGreaterThan(resultNumnberToReach);
     }
 
     async navigateToAdDetailsPage(adIndex: number) {

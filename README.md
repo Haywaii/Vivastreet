@@ -1,8 +1,5 @@
 # Vivastreet Test
 
-## ATTENTION 
-- **test-datat.ts file** Inside replace the "?" by the password given in email so you can successfully login
-
 ## Folder organisation
 
 ### Utils
@@ -10,10 +7,12 @@
 - **test-data** - Store credentials for login and error message displayed
 
 ### page
-- - **loginPage* - The heart of our scenarios with locator and logic to power our tests
+- - **searchPage* - The heart of our scenarios with locator and logic to power our search tests
+- - **adPage* - The heart of our scenarios with locator and logic to power our ad tests
 
 ### test
-- - **loginTest* - Where we have all our automated scenario tests (Positive, negative, performance and accessibility ones)
+- - **searchTest* - Where we have all our automated scenario tests for search navigation/content
+- - **adTest* - Where we have all our automated scenario tests for ad content
 
 ## Potential improvements
 
@@ -33,3 +32,19 @@
 ### on configuration
 - - **Test on smaller screen (mobile) not just in default browsers* 
 - - **Add yaml file to execute our test on a pipeline automatically* 
+
+
+### Observation during my testing
+- - *Advanced Search on BMW* - Some ads results when clicking on it redirect me to the search result with the ad at the top instead of going to the ad itself (not happening everytime so can't automate)
+- - *Advanced Search access* - For some reason to access advanced search i need to do a normal search first. Maybe it's by design. 
+- - *Category selection* - As the option are not visibile within otpgroup, i can't select them. Tried different technique but none work so my scenario are very basic and doesn't cover change of category like i initially wanted. 
+
+## Automation Selection
+
+### Chosen
+- - *Search / Advanced Search* - Cover one of the most business-critical features because if you can't search then you can't find ad and get revenues / Easy to find a negative and positive outcomes
+- - *Access Ad Page* - Primary user journey / no auth or data to change on production (nothing reversible) / stable / cover different important actions from hitting the homepage to ad looking
+
+### Left out
+- - *Login* - Security reason, data creation on production / email dependencies
+- - *Posting an ad* - Data creation = no go (even if fake one) / Risky in term of business on production
