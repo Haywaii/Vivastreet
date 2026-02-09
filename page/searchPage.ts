@@ -8,29 +8,38 @@ export class SearchPage {
         this.page = page;
     }
 
+    
+    async selectCategoryOptions(selectSelector: string, optionText: string) {
+        await this.page.selectOption(selectSelector, { label: optionText});
+    }
+
+
     async performanceSearchHomePageDefault() {
         await this.page.getByRole('button', { name: searchLocators.SEARCH_BUTTON_HOMEPAGE}).click();
         await this.page.waitForLoadState();
     }
 
-    async performSearchHomePage(categoryGroup: string, category: string, location: string) {
-        await this.selectOptionFromOptgroupByText(this.page, searchLocators.CATEGORY_DROPDOWN_HOMEPAGE_SEARCHPAGE, categoryGroup, category);
-        await this.page.locator(searchLocators.LOCATION_DROPDOWN_HOMEPAGE).click();
-        await this.page.locator(searchLocators.LOCATION_DROPDOWN_HOMEPAGE).selectOption(location);
-        await this.page.locator(searchLocators.SEARCH_BUTTON_HOMEPAGE).click();
+    async performSearchHomePage(category: string, location: string) {
+        await this.selectCategoryOptions(searchLocators.CATEGORY_DROPDOWN_HOMEPAGE_SEARCHPAGE, category);
+        if (location.length > 3) {
+            await this.page.selectOption(searchLocators.LOCATION_DROPDOWN_HOMEPAGE, {label: location});
+        }
+        await this.page.getByRole('button', { name: searchLocators.SEARCH_BUTTON_HOMEPAGE }).click();
         await this.page.waitForLoadState();
     }
 
     async performanceAdvancedSearch(searchKeyword: string, category: string, location:string, milesRadius: string, minPrice: string, maxPrice: string) { 
         await this.page.locator(searchLocators.KEYWORD_INPUT_SEARCHPAGE).fill(searchKeyword);
-        //await this.selectOptionFromOptgroupByText(this.page, searchLocators.CATEGORY_DROPDOWN_HOMEPAGE_SEARCHPAGE, '', category);
+        if (category.length > 3){
+            await this.selectCategoryOptions(searchLocators.CATEGORY_DROPDOWN_HOMEPAGE_SEARCHPAGE, category);
+        }
         await this.page.locator(searchLocators.LOCATION_DROPDOWN_SEARCHPAGE).fill(location);
         await this.page.locator(searchLocators.RADIUS_SELECT_SEARCHPAGE).selectOption(milesRadius);
         if(await this.page.locator(searchLocators.MIN_PRICE_INPUT_SEARCHPAGE).isVisible() && await this.page.locator(searchLocators.MAX_PRICE_INPUT_SEARCHPAGE).isVisible()) {
             await this.page.locator(searchLocators.MIN_PRICE_INPUT_SEARCHPAGE).fill(minPrice);
             await this.page.locator(searchLocators.MAX_PRICE_INPUT_SEARCHPAGE).fill(maxPrice);
         }
-        await this.page.locator(searchLocators.SEARCH_BUTTON_SEARCHPAGE).click();
+        await this.page.locator(searchLocators.SEARCH_BUTTON_ADVANCED_SEARCH).click();
         await this.page.waitForLoadState();
     }
 
@@ -51,25 +60,6 @@ export class SearchPage {
         await adLink.click();
         await this.page.waitForLoadState();
     }
-
-
-    async selectOptionFromOptgroupByText(page: any, selectSelector: string, optgroupLabel: string, optionText: string): Promise<void> {
-        const selectElement = page.locator(selectSelector).first();
-        await selectElement.waitFor({ state: 'visible' });
-        await selectElement.click();
-
-        let optionSelector: string;
-        if (optgroupLabel && optionText) {
-            optionSelector = `${selectSelector} optgroup[label="${optgroupLabel}"] option:has-text("${optionText}")`;
-            await page.selectOption(optionSelector , { label: optionText });
-        } else {
-            //await page.getByText('-- Vehicles --').nth(1).click();
-            //await page.locator(`${selectSelector} optgroup[label="${optgroupLabel}"]`).click();
-            optionSelector = `${selectSelector} optgroup:has-text("${optgroupLabel}")`;
-            await page.selectOption(optionSelector , { label: optgroupLabel });
-        }
-    }
-
 
     async isAlertButtonVisible() {
         return await this.page.locator(searchLocators.SEARCH_ALERT_CREATION_BUTTON).isVisible();

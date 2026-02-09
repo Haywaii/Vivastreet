@@ -16,6 +16,7 @@ export class searchLocators {
   static readonly VIP_RESULTS_CAROUSEL = "#vs_carousel";
   static readonly RESULTS_SUMMARY_TEST = '.results-summary'
   static readonly CATEGOY_DROPDOWN_ADVANCED_SEARCH = 'Category'
+  static readonly SEARCH_BUTTON_ADVANCED_SEARCH = '#search-button'
 
   /** ELEMENT FOR NO RESULT SEARCH  **/
   static readonly SEARCH_ALERT_CREATION_BUTTON = '#vs_no_results_alert_submit';

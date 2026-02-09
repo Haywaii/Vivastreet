@@ -20,14 +20,15 @@ test.describe('Aviva Search Tests', () => {
 
   /** POSITIVE TEST SCENARIOS **/
   test('PTS1 - ValidateSearchResult', async ({ page}) => {
-    await searchPage.performanceSearchHomePageDefault();
+    //await searchPage.performanceSearchHomePageDefault();
+    await searchPage.performSearchHomePage(SEARCH_CATEGORY_DATA.category[0],'London');
     await searchPage.calculateSearchResults();
     await searchPage.validateSearchResults(1);
   });  
 
   test('PTS2 - ValidateAdvancedSearchResult', async ({ page}) => {
     await searchPage.performanceSearchHomePageDefault();
-    await searchPage.performanceAdvancedSearch('BMW', '', '', '50', '100', '1000');
+    await searchPage.performanceAdvancedSearch('BMW', SEARCH_CATEGORY_DATA.category[2], '', '50', '1000', '10000');
     await page.waitForLoadState();
     await searchPage.calculateSearchResults();
     await searchPage.validateSearchResults(10);
@@ -37,7 +38,7 @@ test.describe('Aviva Search Tests', () => {
   /** NEGATIVE TEST SCENARIOS **/
   test('NTS1 - ValidateEmptyAdvancedSearchResult', async ({ page}) => {
     await searchPage.performanceSearchHomePageDefault();
-    await searchPage.performanceAdvancedSearch(WRONG_DATA_TO_SEARCH.keyword[0], '', '', '10', '100', '1000');
+    await searchPage.performanceAdvancedSearch(WRONG_DATA_TO_SEARCH.keyword[0], '', '', '10', '', '');
     await page.waitForLoadState();
 
     await searchPage.isAlertButtonVisible();
