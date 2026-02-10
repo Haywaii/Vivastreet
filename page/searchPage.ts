@@ -21,9 +21,7 @@ export class SearchPage {
 
     async performSearchHomePage(category: string, location: string) {
         await this.selectCategoryOptions(searchLocators.CATEGORY_DROPDOWN_HOMEPAGE_SEARCHPAGE, category);
-        if (location.length > 3) {
-            await this.page.selectOption(searchLocators.LOCATION_DROPDOWN_HOMEPAGE, {label: location});
-        }
+        await this.page.selectOption(searchLocators.LOCATION_DROPDOWN_HOMEPAGE, {label: location});
         await this.page.getByRole('button', { name: searchLocators.SEARCH_BUTTON_HOMEPAGE }).click();
         await this.page.waitForLoadState();
     }

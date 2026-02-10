@@ -1,28 +1,32 @@
 import { test, expect } from '@playwright/test';
 import { SearchPage } from '../page/searchPage';
 import { AdPage } from '../page/adPage';
-import { goToVivaSite, clearAllBrowserData, acceptCookies } from '../utils/Helper';
+import { Helper } from '../utils/Helper';
+import {} from '../utils/myFixture';
 import AxeBuilder from '@axe-core/playwright';
 
 test.describe('Aviva Search Tests', () => {
   let searchPage: SearchPage;
   let adPage: AdPage;
+  let helper: Helper;
   let startTime;
   let loadTime: any;
 
   test.beforeEach(async ({ page }) => {
     searchPage = new SearchPage(page);
     adPage = new AdPage(page);
+    helper = new Helper (page);
     startTime = Date.now();
-    await goToVivaSite(page);
-    await acceptCookies(page);
+    await helper.goToVivaSite(page);
+    await helper.acceptCookies(page);
     await searchPage.performanceSearchHomePageDefault();
     await searchPage.navigateToAdDetailsPage(0);
     loadTime = Date.now() - startTime;
   });
 
   test.afterEach(async ({ page }) => {
-    await clearAllBrowserData(page);
+    helper = new Helper (page);
+    await helper.clearAllBrowserData(page);
   });
 
     /** PERFORMANCE **/
@@ -34,20 +38,18 @@ test.describe('Aviva Search Tests', () => {
     test('PTS1 - ValidateAdPageContent', async ({ page}) => {
         adPage.isAdFavouriteButtonVisible();
         adPage.isAdDescriptionSectionVisible();
+        adPage.isAdPhotosSectionVisible();
         adPage.isAdDetailsVisible();
-        adPage.isAdSimilarSuggestionVisible();
+        adPage.isAdSimilarSuggestionSectionVisible();
         adPage.isAdPriceVisible();
-        adPage.isAdTagVisible();
+        adPage.isAdTagSectionVisible();
         adPage.isAdPhoneNumberVisible();
         adPage.isAdEmailButtonVisible();
-        adPage.isAdPosterNameVisible();
-        adPage.isAdPhotosSectionVisible();
+        adPage.isAdPosterNameVisible();  
     });  
 
    /** ACCESSIBILITY TEST **/
-    test('Checka11ySearchPage', (async ({ page}, testInfo) => { 
-        await searchPage.performanceSearchHomePageDefault();
-        await searchPage.navigateToAdDetailsPage(0);
+    test('Checka11yAdPage', (async ({ page}, testInfo) => { 
         const accessibilityScanResults = await new AxeBuilder({page})
         .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
         .analyze();
@@ -58,5 +60,4 @@ test.describe('Aviva Search Tests', () => {
         });
         expect(accessibilityScanResults.violations).toEqual([]);
     }));
-
 });

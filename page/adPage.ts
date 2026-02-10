@@ -2,7 +2,7 @@ import { Page } from '@playwright/test';
 import { adLocators } from '../locators/adLocators';
 
 export class AdPage {
-     protected readonly page: Page;
+    protected readonly page: Page;
 
     constructor(page: Page) {
         this.page = page;
@@ -20,7 +20,7 @@ export class AdPage {
         return await this.page.locator(adLocators.AD_DETAILS_SECTION).isVisible();
     }
 
-    async isAdSimilarSuggestionVisible() {
+    async isAdSimilarSuggestionSectionVisible() {
         return await this.page.locator(adLocators.AD_SIMILAR_SUGGESTION_SECTION).isVisible();
     }
 
@@ -28,7 +28,7 @@ export class AdPage {
         return await this.page.locator(adLocators.AD_PRICE).isVisible();
     }
 
-     async isAdTagVisible() {
+     async isAdTagSectionVisible() {
         return await this.page.locator(adLocators.AD_TAGS_SECTION).isVisible();
     }
 

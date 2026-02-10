@@ -1,7 +1,7 @@
 export const SEARCH_CATEGORY_DATA = {
   category: [
       '-- Free personals --',
-      '-- Holidays -- ',
+      '-- Holidays --',
       '-- Vehicles --',
       'Home',
     ],

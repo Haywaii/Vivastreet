@@ -1,27 +1,31 @@
 import { test, expect } from '@playwright/test';
 import { SearchPage } from '../page/searchPage';
-import { SEARCH_CATEGORY_DATA, SEARCH_LOCATION_DATA, WRONG_DATA_TO_SEARCH, ERROR_MESSAGES } from '../utils/test-data';
-import { goToVivaSite, clearAllBrowserData, acceptCookies } from '../utils/Helper';
+import { SEARCH_CATEGORY_DATA, WRONG_DATA_TO_SEARCH, ERROR_MESSAGES } from '../utils/test-data';
+import { Helper } from '../utils/Helper';
 import AxeBuilder from '@axe-core/playwright';
 
 
 test.describe('Aviva Search Tests', () => {
   let searchPage: SearchPage;
+  let helper: Helper;
 
   test.beforeEach(async ({ page }) => {
     searchPage = new SearchPage(page);
-    await goToVivaSite(page);
-    await acceptCookies(page);
+    helper = new Helper(page);
+    await helper.goToVivaSite(page);
+    await helper.acceptCookies(page);
   });
 
   test.afterEach(async ({ page }) => {
-    await clearAllBrowserData(page);
+    helper = new Helper(page);
+    await helper.clearAllBrowserData(page);
   });
 
   /** POSITIVE TEST SCENARIOS **/
   test('PTS1 - ValidateSearchResult', async ({ page}) => {
-    //await searchPage.performanceSearchHomePageDefault();
-    await searchPage.performSearchHomePage(SEARCH_CATEGORY_DATA.category[0],'London');
+    const category = helper.getRandomSearchCategory();
+    const location = helper.getRandomSearchLocation();
+    await searchPage.performSearchHomePage(category,location);
     await searchPage.calculateSearchResults();
     await searchPage.validateSearchResults(1);
   });  
