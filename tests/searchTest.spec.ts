@@ -22,7 +22,7 @@ test.describe('Aviva Search Tests', () => {
   });
 
   /** POSITIVE TEST SCENARIOS **/
-  test('PTS1 - ValidateSearchResult', async ({ page}) => {
+  test('PTS1 - ValidateSearchResult', async ({ }) => {
     const category = helper.getRandomSearchCategory();
     const location = helper.getRandomSearchLocation();
     await searchPage.performSearchHomePage(category,location);
@@ -31,8 +31,8 @@ test.describe('Aviva Search Tests', () => {
   });  
 
   test('PTS2 - ValidateAdvancedSearchResult', async ({ page}) => {
-    await searchPage.performanceSearchHomePageDefault();
-    await searchPage.performanceAdvancedSearch('BMW', SEARCH_CATEGORY_DATA.category[2], '', '50', '1000', '10000');
+    await searchPage.performSearchHomePageDefault();
+    await searchPage.performAdvancedSearch('BMW', SEARCH_CATEGORY_DATA.category[2], '', '50', '1000', '10000');
     await page.waitForLoadState();
     await searchPage.calculateSearchResults();
     await searchPage.validateSearchResults(10);
@@ -41,8 +41,8 @@ test.describe('Aviva Search Tests', () => {
 
   /** NEGATIVE TEST SCENARIOS **/
   test('NTS1 - ValidateEmptyAdvancedSearchResult', async ({ page}) => {
-    await searchPage.performanceSearchHomePageDefault();
-    await searchPage.performanceAdvancedSearch(WRONG_DATA_TO_SEARCH.keyword[0], '', '', '10', '', '');
+    await searchPage.performSearchHomePageDefault();
+    await searchPage.performAdvancedSearch(WRONG_DATA_TO_SEARCH.keyword[0], '', '', '10', '', '');
     await page.waitForLoadState();
 
     await searchPage.isAlertButtonVisible();
@@ -53,7 +53,7 @@ test.describe('Aviva Search Tests', () => {
 
   /** ACCESSIBILITY TEST **/
   test('Checka11ySearchPage', (async ({ page}, testInfo) => { 
-    await searchPage.performanceSearchHomePageDefault();
+    await searchPage.performSearchHomePageDefault();
     const accessibilityScanResults = await new AxeBuilder({page})
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
       .analyze();

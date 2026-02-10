@@ -19,7 +19,7 @@ test.describe('Aviva Search Tests', () => {
     startTime = Date.now();
     await helper.goToVivaSite(page);
     await helper.acceptCookies(page);
-    await searchPage.performanceSearchHomePageDefault();
+    await searchPage.performSearchHomePageDefault();
     await searchPage.navigateToAdDetailsPage(0);
     loadTime = Date.now() - startTime;
   });

@@ -14,7 +14,7 @@ export class SearchPage {
     }
 
 
-    async performanceSearchHomePageDefault() {
+    async performSearchHomePageDefault() {
         await this.page.getByRole('button', { name: searchLocators.SEARCH_BUTTON_HOMEPAGE}).click();
         await this.page.waitForLoadState();
     }
@@ -26,7 +26,7 @@ export class SearchPage {
         await this.page.waitForLoadState();
     }
 
-    async performanceAdvancedSearch(searchKeyword: string, category: string, location:string, milesRadius: string, minPrice: string, maxPrice: string) { 
+    async performAdvancedSearch(searchKeyword: string, category: string, location:string, milesRadius: string, minPrice: string, maxPrice: string) { 
         await this.page.locator(searchLocators.KEYWORD_INPUT_SEARCHPAGE).fill(searchKeyword);
         if (category.length > 3){
             await this.selectCategoryOptions(searchLocators.CATEGORY_DROPDOWN_HOMEPAGE_SEARCHPAGE, category);
