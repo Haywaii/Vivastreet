@@ -1,10 +1,11 @@
 # Vivastreet Test
 
 ## How to run the tests 
-1/ Clone the project on your local and just launch test with one of the following command:
+1/ Clone the project on your local, open with your favourite coding tools and just launch test with one of the following command:
 - **Run all tests at once** - npx playwright test
 - **Run a specific test** - npx playwright test -g "your test name
 - **Run a specific file** - npx playwright test yourtestfilename.ts
+- **Run test with headed mode** - npx playwright test --headed (it's headless by default)
 
 2/ Directly into github by re-running the last workflow executed after the last commit (you need to open it to re-run it). 
 **Warning** - Run will fail as accessibility test are failing (in actions tab of the project)
@@ -32,6 +33,7 @@
 ### On test scenarios
 - **Better selection management** - Adding better method or if condition for dealing with category name selection / switch case for making it more dynamic for each potential path taken
 - **Better accessibility/performance management** - Like better reporting or using artillery with playwright to get proper LCP time
+- **More random journey for ad display** - Just go to different ads (random selection) everytime you check ad content
 
 ### On utils
 - **Add a fixture for common axe configuration** - so it's easier to share config across tests
